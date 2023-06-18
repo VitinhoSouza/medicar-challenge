@@ -31,7 +31,7 @@ export const Button = styled.button<ButtonProps>`
 
   &:hover{
     border-color: ${(props) => props.category === 'secondary' ? `${props.theme.colors.primary}` : 'transparent'};
-    background-color: ${(props) => props.category === 'primary' ? `${props.theme.colors.primary_hover}` : ''};
+    background-color: ${(props) => props.category === 'primary' && !props.disabled ? `${props.theme.colors.primary_hover}` : ''};
     color: ${(props) => props.category === 'tertiary' ? `${props.theme.colors.primary_hover}` : ''};
   }
 

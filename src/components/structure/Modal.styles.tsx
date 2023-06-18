@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
-import theme from '../../../../styles/theme';
+import theme from '../../styles/theme';
 
 export const DialogRoot = styled(Dialog.Root)`
   width: 100vw;
@@ -35,6 +35,8 @@ export const DialogContent = styled(Dialog.Content)`
 
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 2rem;
 `
 
@@ -49,8 +51,6 @@ export const DialogTitle = styled(Dialog.Title)`
   color: ${theme.colors.black};
 `
 
-
-
 export const DialogClose = styled(Dialog.Close)`
   
 `
@@ -60,6 +60,8 @@ export const Main = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
+
+  color: ${theme.colors.black};
 `
 
 export const ActionButtons = styled.div`

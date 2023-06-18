@@ -63,6 +63,7 @@ export const ModalAppointment = ({ setOpenModal, tryGetAppointments }: IModal) =
   const specialty = watch('specialty');
   const doctor = watch('doctor');
   const date = watch('date');
+  const hour = watch('hour');
 
   const [optionsSpecialty, setOptionsSpecialty] = useState([]);
   const [optionsDoctor, setOptionsDoctor] = useState([]);
@@ -174,7 +175,7 @@ export const ModalAppointment = ({ setOpenModal, tryGetAppointments }: IModal) =
             <Button category="secondary">Cancelar</Button>
           </S.DialogClose>
 
-          <Button category="primary" type="submit">
+          <Button category="primary" type="submit" disabled={!hour}>
             Confirmar
           </Button>
         </S.ActionButtons>

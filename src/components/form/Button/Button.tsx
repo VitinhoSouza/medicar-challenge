@@ -4,7 +4,6 @@ import * as S from "./Button.styles";
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   category?: "primary" | "secondary" | "tertiary";
   disabled?: boolean;
-  style?: any;
   children?: ReactNode;
 }
 
