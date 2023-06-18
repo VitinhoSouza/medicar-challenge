@@ -8,6 +8,7 @@ interface ButtonProps {
 export const Button = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
+  gap: 0.7rem;
 
   padding: ${(props) => props.category === 'tertiary' ? '0' : '1rem 3rem'};
   font-weight: ${(props) => props.category === 'tertiary' ? 400 : 700};

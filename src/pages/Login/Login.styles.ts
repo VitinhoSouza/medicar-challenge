@@ -10,8 +10,6 @@ export const ContainerPageLogin = styled.div`
 `
 
 export const ContentPageLogin = styled.form`
-  /* background-color: red; */
-
   height: 50%;
   display: flex;
   flex-direction: column;

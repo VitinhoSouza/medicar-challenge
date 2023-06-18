@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import theme from '../../styles/theme';
 
 export const ContainerPageRegister = styled.div`
   height: 100vh;
@@ -10,8 +11,6 @@ export const ContainerPageRegister = styled.div`
 `
 
 export const ContentPageRegister = styled.form`
-  /* background-color: red; */
-
   height: 70%;
   display: flex;
   flex-direction: column;
@@ -23,7 +22,7 @@ export const ContentPageRegister = styled.form`
   }
 
   >span{
-    color: ${(props) => props.theme.colors.black};
+    color: ${theme.colors.black};
     font-weight: 700;
     font-size: 1.125rem;
     line-height: 1.3125rem;

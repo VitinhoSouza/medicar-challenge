@@ -13,7 +13,10 @@ export interface ILoginForm {
 }
 
 export interface IAppointmentForm{
-
+    specialty: string;
+    doctor: string;
+    date: string;
+    hour: string;
 }
 
 

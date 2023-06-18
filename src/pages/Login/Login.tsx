@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
@@ -17,14 +17,8 @@ import logoImage from "../../assets/logo.png";
 import * as S from "./Login.styles";
 
 export const Login = () => {
-
   const navigate = useNavigate();
-  const { 
-    register, 
-    handleSubmit, 
-    setValue,
-    control, 
-  } = useForm();
+  const { register, handleSubmit, setValue, control } = useForm();
 
   const { auth, setAuthLS } = useAuth();
 
@@ -37,57 +31,59 @@ export const Login = () => {
       setAuthLS(res);
       navigate("/");
     }
-    
   }
 
   useEffect(() => {
-    if (
-      !!auth &&
-      !!auth.token &&
-      auth.token !== "null"
-    ) {
+    if (!!auth && !!auth.token && auth.token !== "null") {
       navigate("/home");
     }
   }, [auth]);
 
-  return(
+  return (
     <S.ContainerPageLogin>
-        <S.ContentPageLogin as="form" onSubmit={handleSubmit(tryLogin)}>
-          <img src={logoImage}/>
+      <S.ContentPageLogin as="form" onSubmit={handleSubmit(tryLogin)}>
+        <img src={logoImage} />
 
-          <Input
-            type="text"
-            placeholder="Email ou Login"
-            {...register('username', { required: true } )}
-          />
+        <Input
+          type="text"
+          placeholder="Email ou Login"
+          {...register("username", { required: true })}
+        />
 
-          <InputPassword
-            placeholder="Senha"
-            {...register("password", { required: true } )}
-          />
+        <InputPassword
+          placeholder="Senha"
+          {...register("password", { required: true })}
+        />
 
-          <Controller
-            name="remember_password"
-            control={control}
-            defaultValue={false}
-            render={({ field }) => (
-              <Checkbox
-                label="Lembrar minha senha"
-                checked={field.value}
-                onCheckedChange={(checked: boolean) => {
-                  setValue('remember_password', checked);
-                }}
-                {...field}
-              />
-            )}
-          />
+        <Controller
+          name="remember_password"
+          control={control}
+          defaultValue={false}
+          render={({ field }) => (
+            <Checkbox
+              label="Lembrar minha senha"
+              checked={field.value}
+              onCheckedChange={(checked: boolean) => {
+                setValue("remember_password", checked);
+              }}
+              {...field}
+            />
+          )}
+        />
 
-          <S.ButtonActions>
-            <Button category="secondary" type="button" onClick={() => navigate("/register")}>Criar conta</Button>
-            <Button category="primary" type="submit">Acessar</Button>
-          </S.ButtonActions>
-
-        </S.ContentPageLogin>
+        <S.ButtonActions>
+          <Button
+            category="secondary"
+            type="button"
+            onClick={() => navigate("/register")}
+          >
+            Criar conta
+          </Button>
+          <Button category="primary" type="submit">
+            Acessar
+          </Button>
+        </S.ButtonActions>
+      </S.ContentPageLogin>
     </S.ContainerPageLogin>
-  )
-}
+  );
+};

@@ -1,14 +1,15 @@
 import styled from 'styled-components';
+import theme from '../../../styles/theme';
 
 
 export const Input = styled.input`
   width: 100%;
   height: 2.5rem;
 
-  color: ${(props) => props.theme.colors.gray2};
+  color: ${theme.colors.gray2};
 
   ::placeholder {
-    color: ${(props) => props.theme.colors.gray2};
+    color: ${theme.colors.gray2};
   }
   
   border: none;
@@ -19,17 +20,17 @@ export const Input = styled.input`
   &:focus {
     border: none;
     outline-style: solid;
-    outline-color: ${(props) => (props.theme.colors.primary_hover)};
+    outline-color: ${theme.colors.primary_hover};
     outline-width: 2px;
   }
 
   outline-style: solid;
   outline-width: 1px;
-  outline-color: ${(props) => props.theme.colors.gray2};
+  outline-color: ${theme.colors.gray2};
 
   &:hover {
     border: none;
     outline-width: 2px;
-    outline-color: ${(props) => (props.theme.colors.primary)};
+    outline-color: ${theme.colors.primary};
   }
 `;

@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import * as Dialog from "@radix-ui/react-dialog";
-
 import { Button } from "../../components/form/Button/Button";
 import { ModalAppointment } from "./components/ModalAppointment/ModalAppointment";
 
@@ -33,7 +31,7 @@ export const Home = () => {
   const { auth, setAuthLS } = useAuth();
   const navigate = useNavigate();
 
-  async function tryDeleteAppointment(appointmentId:number) {
+  async function tryDeleteAppointment(appointmentId: number) {
     const res = await medicarAPI.deleteAppointment(auth?.token, appointmentId);
     if (res.message === "invalid") {
       showAlert("error", "Houve um erro ao desmarcar a consulta!");
@@ -66,7 +64,7 @@ export const Home = () => {
   }, [auth]);
 
   return (
-    <Dialog.Root open={openModal} onOpenChange={setOpenModal}>
+    <MS.DialogRoot open={openModal} onOpenChange={setOpenModal}>
       <S.ContainerPageHome>
         <S.ContentPageHome>
           <S.Header>
@@ -109,10 +107,15 @@ export const Home = () => {
                   <tr key={appointment.id}>
                     <td>{appointment.medico.especialidade.nome}</td>
                     <td>{appointment.medico.nome}</td>
-                    <td>{new Date(appointment.dia).toLocaleDateString('pt-Br')}</td>
+                    <td>
+                      {new Date(appointment.dia).toLocaleDateString("pt-Br")}
+                    </td>
                     <td>{appointment.horario}</td>
                     <td>
-                      <Button category="tertiary" onClick={()=>tryDeleteAppointment(appointment.id)}>
+                      <Button
+                        category="tertiary"
+                        onClick={() => tryDeleteAppointment(appointment.id)}
+                      >
                         <IconX />
                         Desmarcar
                       </Button>
@@ -127,8 +130,11 @@ export const Home = () => {
 
       <MS.DialogPortal>
         <MS.DialogOverlay />
-        <ModalAppointment setOpenModal={setOpenModal} tryGetAppointments={tryGetAppointments} />
+        <ModalAppointment
+          setOpenModal={setOpenModal}
+          tryGetAppointments={tryGetAppointments}
+        />
       </MS.DialogPortal>
-    </Dialog.Root>
+    </MS.DialogRoot>
   );
 };

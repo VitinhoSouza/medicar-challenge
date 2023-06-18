@@ -1,4 +1,5 @@
 import {createGlobalStyle} from 'styled-components';
+import theme from './theme';
 
 export default createGlobalStyle`
     *{
@@ -9,9 +10,9 @@ export default createGlobalStyle`
     }
 
     body{
-        color: ${props => props.theme.colors.white};
+        color: ${theme.colors.white};
 
         height: 100vh;
-        width: 100%;
+        width: 100vw;
     }
 `

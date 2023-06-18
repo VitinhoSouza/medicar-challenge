@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import theme from '../../../styles/theme';
 
 export const InputContent = styled.div`
   display: flex;
@@ -11,10 +12,10 @@ export const Input = styled.input`
   width: 100%;
   height: 2.5rem;
 
-  color: ${(props) => props.theme.colors.gray2};
+  color: ${theme.colors.gray2};
   
   ::placeholder {
-    color: ${(props) => props.theme.colors.gray2};
+    color: ${theme.colors.gray2};
   }
 
   border: none;
@@ -22,16 +23,16 @@ export const Input = styled.input`
   padding: 0.625rem 3.125rem 0.625rem 0.625rem;
   font-size: 0.8125rem;
 
-  outline: 1px solid ${(props) => props.theme.colors.gray2};
+  outline: 1px solid ${theme.colors.gray2};
 
   &:focus {
-    outline-color: ${(props) => (props.theme.colors.primary_hover)};
+    outline-color: ${theme.colors.primary_hover};
     outline-width: 2px;
   }
 
   &:hover {
     outline-width: 2px;
-    outline-color: ${(props) => (props.theme.colors.primary)};
+    outline-color: ${theme.colors.primary};
   }
 `;
 

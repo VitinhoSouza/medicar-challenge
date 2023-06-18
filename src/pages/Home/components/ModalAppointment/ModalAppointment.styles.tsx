@@ -5,20 +5,18 @@ import theme from '../../../../styles/theme';
 export const DialogRoot = styled(Dialog.Root)`
   width: 100vw;
   height: 100vh;
-  background-color: yellow;
 `;
 
 export const DialogPortal = styled(Dialog.Portal)`
   width: 100%;
   height: 100%;
-  background-color: black;
 `;
 
 export const ButtonTriggerModal = styled(Dialog.Trigger)`
-  padding: 0.4rem 1rem;
+  padding: 1rem 1rem;
   font-size: 0.8125rem;
   font-weight: 400;
-  gap: 1rem;
+  
   height: 1.5rem;
   line-height: 1.3125rem;
   border-radius: 8px;
