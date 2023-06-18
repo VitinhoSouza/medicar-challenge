@@ -94,7 +94,7 @@ export const ModalAppointment = ({ setOpenModal, tryGetAppointments }: IModal) =
             return {  
               id: String(index+1),
               nome: hour,
-              isDisabled: !timeIsInThePast(Number(hour.slice(0,1)), Number(hour.slice(3,4)))
+              isDisabled: timeIsInThePast(Number(hour.slice(0,2)), Number(hour.slice(3,5)))
             }
           })
         }

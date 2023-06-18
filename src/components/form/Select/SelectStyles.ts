@@ -38,6 +38,10 @@ export const Container = styled.div<InputProps>`
     border-radius: 4px;
 
     border-color:  ${(props) => (props.withError ? '#ff3333' : '')};
+
+    option:disabled{
+      background-color: ${theme.colors.gray1};
+    }
   }
   
 `;
