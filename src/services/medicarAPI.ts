@@ -1,28 +1,11 @@
 import { AxiosResponse, AxiosError } from "axios";
 import api from "./api";
-
-export interface IRegisterForm {
-  username: string;
-  email: string;
-  password: string;
-  password_confirmation?: string;
-}
-
-export interface ILoginForm {
-  username: string;
-  password: string;
-  remember_password: boolean;
-}
-
-export interface IAppointmentForm {
-  specialty: string;
-  doctor: string;
-  date: string;
-  hour: string;
-}
+import { LoginFormData } from "../pages/Login/Login";
+import { AppointmentFormData } from "../pages/Home/components/ModalAppointment/ModalAppointment";
+import { RegisterFormData } from "../pages/Register/Register";
 
 export const medicarAPI = {
-  registerUser: async (user: IRegisterForm) => {
+  registerUser: async (user: RegisterFormData) => {
     let response = "invalid";
     await api
       .post("/users", user)
@@ -36,7 +19,7 @@ export const medicarAPI = {
     return response;
   },
 
-  login: async (user: ILoginForm) => {
+  login: async (user: LoginFormData) => {
     let response = {
       message: "invalid",
       token: "",
@@ -142,7 +125,7 @@ export const medicarAPI = {
     return response;
   },
 
-  postAppointments: async (token: string, data: IAppointmentForm) => {
+  postAppointments: async (token: string, data: AppointmentFormData) => {
     let response = {
       message: "invalid",
       data: [],

@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 import theme from '../../../styles/theme';
 
+export const ContainerInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+`
+
 export const InputContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -8,9 +14,13 @@ export const InputContent = styled.div`
   max-height: 2.5rem;
 `;
 
-export const Input = styled.input`
+type InputProps = {
+  withError: boolean;
+};
+
+export const Input = styled.input<InputProps>`
   width: 100%;
-  height: 2.5rem;
+  min-height: 2.5rem;
 
   color: ${theme.colors.gray2};
   
@@ -34,6 +44,8 @@ export const Input = styled.input`
     outline-width: 2px;
     outline-color: ${theme.colors.primary};
   }
+
+  outline-color:  ${(props) => (props.withError ? '#ff3333' : '')};
 `;
 
 export const Icon = styled.div`
@@ -44,9 +56,16 @@ export const Icon = styled.div`
   height: 1.5rem;
 
   left: 90%;
-  bottom: 1.6rem;
+  bottom: 1.8rem;
 
   > svg {
     cursor: pointer;
   }
+`;
+
+export const SpanError = styled.span`
+  font-size: 0.75rem;
+  color: #ff3333;
+
+  margin: 0.2rem;
 `;

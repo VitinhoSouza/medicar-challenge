@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 import theme from '../../../styles/theme';
 
+type InputProps = {
+  withError: boolean;
+};
 
-export const Container = styled.div`
+export const Container = styled.div<InputProps>`
   border: none;
   outline: none;
   border-radius: 0.5rem;
@@ -33,6 +36,15 @@ export const Container = styled.div`
     background: ${theme.colors.white};
     border: 1px solid ${theme.colors.gray2};
     border-radius: 4px;
+
+    border-color:  ${(props) => (props.withError ? '#ff3333' : '')};
   }
   
+`;
+
+export const SpanError = styled.span`
+  font-size: 0.75rem;
+  color: #ff3333;
+
+  margin: 0.2rem;
 `;

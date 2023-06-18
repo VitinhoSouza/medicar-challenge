@@ -1,16 +1,34 @@
 import { useEffect, useState } from 'react';
-
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 import { Button } from "../../../../components/form/Button/Button";
 import { Select } from "../../../../components/form/Select/Select";
 
 import { useAuth } from "../../../../hooks/useAuth";
-import { IAppointmentForm, medicarAPI } from "../../../../services/medicarAPI";
+import { medicarAPI } from "../../../../services/medicarAPI";
 import { showAlert } from "../../../../utils/alert";
 import { timeIsInThePast } from '../../../../utils/functions';
 
 import * as S from "./ModalAppointment.styles";
+
+const appointmentSchema = z.object({
+  specialty: z.string().min(1, {
+    message: "Campo obrigatório",
+  }),
+  doctor: z.string().min(1, {
+    message: "Campo obrigatório",
+  }),
+  date: z.string().min(1, {
+    message: "Campo obrigatório",
+  }),
+  hour: z.string().min(1, {
+    message: "Campo obrigatório",
+  }),
+});
+
+export type AppointmentFormData = z.infer<typeof appointmentSchema>;
 
 interface IModal {
   setOpenModal: (isOpen: boolean) => void;
@@ -37,7 +55,9 @@ interface IDateState {
 
 export const ModalAppointment = ({ setOpenModal, tryGetAppointments }: IModal) => {
 
-  const { register, handleSubmit, watch } = useForm<IAppointmentForm>();
+  const { register, handleSubmit, watch } = useForm<AppointmentFormData>({
+    resolver: zodResolver(appointmentSchema),
+  });
   const { auth } = useAuth();
 
   const specialty = watch('specialty');
@@ -99,7 +119,7 @@ export const ModalAppointment = ({ setOpenModal, tryGetAppointments }: IModal) =
     setOptionsHour(!!date ? optionsDate.find(optionDate => optionDate.id == date)?.hours || [] : []);
   },[date])
 
-  async function tryMakeAnAppointment(data: IAppointmentForm) {  
+  async function tryMakeAnAppointment(data: AppointmentFormData) {  
     const res = await medicarAPI.postAppointments(auth?.token, data);
 
     if (res.message === "invalid") {
@@ -120,28 +140,32 @@ export const ModalAppointment = ({ setOpenModal, tryGetAppointments }: IModal) =
           <Select
             label="Especialidade"
             options={optionsSpecialty}
-            {...register("specialty", { required: true })}
+            error={/* errors.specialty?.message ||  */''}
+            {...register("specialty")}
           />
 
           <Select
             disabled={optionsDoctor.length === 0}
             label="Médico"
             options={optionsDoctor}
-            {...register("doctor", { required: true })}
+            error={/* errors.doctor?.message ||  */''}
+            {...register("doctor")}
           />
 
           <Select
             disabled={optionsDate.length === 0}
             label="Data"
             options={optionsDate}
-            {...register("date", { required: true })}
+            error={/* errors.date?.message ||  */''}
+            {...register("date")}
           />
 
           <Select
             disabled={optionsHour.length === 0}
             label="Hora"
             options={optionsHour}
-            {...register("hour", { required: true })}
+            error={/* errors.hour?.message ||  */''}
+            {...register("hour")}
           />
         </S.Main>
 

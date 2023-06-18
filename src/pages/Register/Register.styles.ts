@@ -14,7 +14,7 @@ export const ContentPageRegister = styled.form`
   height: 70%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.25rem;
 
   >img{
     max-height: 3.125rem;
