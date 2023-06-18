@@ -15,7 +15,6 @@ export const ContentPageHome = styled.form`
   width: 50%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
 `
 
 export const Header = styled.header`
@@ -45,7 +44,7 @@ export const HeaderRight = styled.div`
 export const ContainerTable = styled.div`
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  min-height: 80vh;
+  min-height: 85vh;
 `
 
 export const ContainerTitleAndAction = styled.div`

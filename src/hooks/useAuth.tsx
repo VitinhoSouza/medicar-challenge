@@ -6,19 +6,19 @@ interface IAuthProviderProps {
 
 interface IAuthContextData {
   auth: {
-    token: string | null;
+    token: string;
   };
-  setAuthLS: (newAuth: any) => void;
+  setAuthLS: (newAuth: {token: string}) => void;
 }
 
 const AuthContext = createContext<IAuthContextData>({} as IAuthContextData);
 
 export function AuthProvider({ children }: IAuthProviderProps) {
   const [auth, setAuth] = useState({
-    token: localStorage.getItem("@Medicar:token")
+    token: localStorage.getItem("@Medicar:token") || ""
   });
 
-  const setAuthLS = (newAuth: any) => {
+  const setAuthLS = (newAuth: {token: string}) => {
     setAuth(newAuth);
     localStorage.setItem("@Medicar:token", newAuth.token);
   };

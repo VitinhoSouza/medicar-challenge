@@ -1,11 +1,11 @@
-import React, { ButtonHTMLAttributes } from "react";
+import React, { ButtonHTMLAttributes, ReactNode } from "react";
 import * as S from "./Button.styles";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   category?: "primary" | "secondary" | "tertiary";
   disabled?: boolean;
   style?: any;
-  children?: any;
+  children?: ReactNode;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(

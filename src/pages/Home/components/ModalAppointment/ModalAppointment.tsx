@@ -6,7 +6,7 @@ import { Button } from "../../../../components/form/Button/Button";
 import { Select } from "../../../../components/form/Select/Select";
 
 import { useAuth } from "../../../../hooks/useAuth";
-import { medicarAPI } from "../../../../services/medicarAPI";
+import { IAppointmentForm, medicarAPI } from "../../../../services/medicarAPI";
 import { showAlert } from "../../../../utils/alert";
 import { timeIsInThePast } from '../../../../utils/functions';
 
@@ -37,7 +37,7 @@ interface IDateState {
 
 export const ModalAppointment = ({ setOpenModal, tryGetAppointments }: IModal) => {
 
-  const { register, handleSubmit, watch } = useForm();
+  const { register, handleSubmit, watch } = useForm<IAppointmentForm>();
   const { auth } = useAuth();
 
   const specialty = watch('specialty');
@@ -99,7 +99,7 @@ export const ModalAppointment = ({ setOpenModal, tryGetAppointments }: IModal) =
     setOptionsHour(!!date ? optionsDate.find(optionDate => optionDate.id == date)?.hours || [] : []);
   },[date])
 
-  async function tryMakeAnAppointment(data: any) {  
+  async function tryMakeAnAppointment(data: IAppointmentForm) {  
     const res = await medicarAPI.postAppointments(auth?.token, data);
 
     if (res.message === "invalid") {

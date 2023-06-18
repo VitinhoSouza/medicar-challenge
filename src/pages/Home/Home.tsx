@@ -53,12 +53,12 @@ export const Home = () => {
   }, []);
 
   function tryLogout() {
-    setAuthLS({ token: null });
+    setAuthLS({ token: "" });
     showAlert("success", "Logout realizado.");
   }
 
   useEffect(() => {
-    if (auth !== undefined && (auth.token === "null" || auth.token === null)) {
+    if (auth !== undefined && !auth.token) {
       navigate("/");
     }
   }, [auth]);

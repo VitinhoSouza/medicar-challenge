@@ -8,7 +8,7 @@ import { Input } from "../../components/form/Input/Input";
 import { InputPassword } from "../../components/form/InputPassword/InputPassword";
 import { Checkbox } from "../../components/form/Checkbox/Checkbox";
 
-import { medicarAPI } from "../../services/medicarAPI";
+import { ILoginForm, medicarAPI } from "../../services/medicarAPI";
 import { showAlert } from "../../utils/alert";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -18,17 +18,17 @@ import * as S from "./Login.styles";
 
 export const Login = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit, setValue, control } = useForm();
+  const { register, handleSubmit, setValue, control } = useForm<ILoginForm>();
 
   const { auth, setAuthLS } = useAuth();
 
-  async function tryLogin(data: any) {
+  async function tryLogin(data: ILoginForm) {
     const res = await medicarAPI.login(data);
-    if (res === "invalid") {
+    if (res.message === "invalid") {
       showAlert("error", "Email e/ou senha incorretos!");
     } else {
       showAlert("success", "Login realizado.");
-      setAuthLS(res);
+      setAuthLS({ token: res.token });
       navigate("/");
     }
   }
