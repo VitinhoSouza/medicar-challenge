@@ -23,7 +23,15 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             key={String(option.id)}
             value={String(option.id)}
             disabled={option.isDisabled || false}
-            title={option.isDisabled && 'Horário indisponível, escolha um horário posterior ao atual.' || ''}
+            title={
+              (option.isDisabled &&
+                label === "Hora" &&
+                "Horário indisponível, escolha um horário posterior ao atual.") ||
+              (option.isDisabled &&
+                label === "Data" &&
+                "Dia indisponível, escolha um dia posterior ao atual.") ||
+              ""
+            }
           >
             {option.nome}
           </option>

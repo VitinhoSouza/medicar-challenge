@@ -88,14 +88,17 @@ export const ModalAppointment = ({ setOpenModal, tryGetAppointments }: IModal) =
     const res = await medicarAPI.getDate(auth?.token, doctor);
     if (res.message !== "invalid" && res.data !== undefined) {
       const optionsDate = res?.data?.map((date:IDateRequest) =>{
+        const day = new Date(date.dia);
+        day.setDate(day.getDate() + 1);
         return {
           id: String(date.id),
-          nome: new Date(date.dia).toLocaleDateString('pt-Br'),
+          nome: day.toLocaleDateString('pt-br'),
+          isDisabled: timeIsInThePast(day, 23, 59),
           hours: date.horarios.map((hour, index) => {
             return {  
               id: String(index+1),
               nome: hour,
-              isDisabled: timeIsInThePast(Number(hour.slice(0,2)), Number(hour.slice(3,5)))
+              isDisabled: timeIsInThePast(day, Number(hour.slice(0,2)), Number(hour.slice(3,5)))
             }
           })
         }

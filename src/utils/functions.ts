@@ -1,6 +1,6 @@
-export function timeIsInThePast(hours:number, minutes:number) {
+export function timeIsInThePast(day:Date, hours:number, minutes:number) {
   const now = new Date();
-  const hourVerify = new Date(); 
-  hourVerify.setHours(hours, minutes, 0); 
+  const hourVerify = day; 
+  hourVerify.setHours(hours, minutes, 0);
   return hourVerify < now;
 }

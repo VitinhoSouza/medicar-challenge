@@ -8,6 +8,7 @@ import { Modal } from "../../components/structure/Modal";
 import { medicarAPI } from "../../services/medicarAPI";
 import { useAuth } from "../../hooks/useAuth";
 import { showAlert } from "../../utils/alert";
+import { timeIsInThePast } from "../../utils/functions";
 
 import { ReactComponent as IconX } from "../../assets/icons/iconX.svg";
 import { ReactComponent as IconPlus } from "../../assets/icons/iconPlus.svg";
@@ -59,7 +60,16 @@ export const Home = () => {
   async function tryGetAppointments() {
     const res = await medicarAPI.getAppointments(auth?.token);
     if (res.message !== "invalid" && res.data !== undefined) {
-      setAppointments(res.data);
+      setAppointments(
+        res.data.map((appointment: IAppointment) => {
+          const day = new Date(appointment.dia);
+          day.setDate(day.getDate() + 1);
+          return {
+            ...appointment,
+            dia: day.toLocaleDateString("pt-br"),
+          };
+        })
+      );
     }
   }
 
@@ -87,7 +97,10 @@ export const Home = () => {
           <S.HeaderRight>
             <span>Victor Souza</span>
 
-            <Button category="tertiary" onClick={()=>setOpenModalLogout(true)}>
+            <Button
+              category="tertiary"
+              onClick={() => setOpenModalLogout(true)}
+            >
               Desconectar
             </Button>
           </S.HeaderRight>
@@ -104,7 +117,7 @@ export const Home = () => {
                 fontSize: "0.8125rem",
                 fontWeight: "400",
                 height: "1.5rem",
-                lineHeight: "1.3125rem"
+                lineHeight: "1.3125rem",
               }}
             >
               <IconPlus />
@@ -124,27 +137,38 @@ export const Home = () => {
             </thead>
 
             <tbody>
-              {appointments.map((appointment) => (
-                <tr key={appointment.id}>
-                  <td>{appointment.medico.especialidade.nome}</td>
-                  <td>{appointment.medico.nome}</td>
-                  <td>
-                    {new Date(appointment.dia).toLocaleDateString("pt-Br")}
-                  </td>
-                  <td>{appointment.horario}</td>
-                  <td>
-                    <Button
-                      category="tertiary"
-                      onClick={() =>
-                        toggleActiveModalDeleteAppointment(appointment)
-                      }
-                    >
-                      <IconX />
-                      Desmarcar
-                    </Button>
-                  </td>
-                </tr>
-              ))}
+              {appointments.map((appointment) => {
+                return (
+                  <tr key={appointment.id}>
+                    <td>{appointment.medico.especialidade.nome}</td>
+                    <td>{appointment.medico.nome}</td>
+                    <td>{appointment.dia}</td>
+                    <td>{appointment.horario}</td>
+                    <td>
+                      <Button
+                        category="tertiary"
+                        onClick={
+                          timeIsInThePast(
+                            new Date(appointment.dia),
+                            Number(appointment.horario.slice(0, 2)),
+                            Number(appointment.horario.slice(3, 5))
+                          )
+                            ? () =>
+                                showAlert(
+                                  "error",
+                                  "Não é possível desmarcar a consulta, pois a data já passou."
+                                )
+                            : () =>
+                                toggleActiveModalDeleteAppointment(appointment)
+                        }
+                      >
+                        <IconX />
+                        Desmarcar
+                      </Button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </S.TableAppointments>
         </S.ContainerTable>
@@ -171,40 +195,14 @@ export const Home = () => {
           <M.DialogOverlay />
           <Modal
             title="Deseja realmente desmarcar a consulta agendada?"
-            description={`Consulta no dia ${new Date(
-              appointmentToBeDeleted.dia
-            ).toLocaleDateString("pt-Br")} às ${
-              appointmentToBeDeleted.horario
-            } com o Médico ${appointmentToBeDeleted.medico?.nome}.`}
+            description={`Consulta no dia ${appointmentToBeDeleted.dia} às ${appointmentToBeDeleted.horario} com o Médico ${appointmentToBeDeleted.medico?.nome}.`}
             cancelFunction={() => setOpenModalDeleteAppointment(false)}
             okFunction={() => tryDeleteAppointment(appointmentToBeDeleted.id)}
           />
         </M.DialogPortal>
       </M.DialogRoot>
 
-      <M.DialogRoot
-        open={openModalDeleteAppointment}
-        onOpenChange={setOpenModalDeleteAppointment}
-      >
-        <M.DialogPortal>
-          <M.DialogOverlay />
-          <Modal
-            title="Deseja realmente desmarcar a consulta agendada?"
-            description={`Consulta no dia ${new Date(
-              appointmentToBeDeleted.dia
-            ).toLocaleDateString("pt-Br")} às ${
-              appointmentToBeDeleted.horario
-            } com o Médico ${appointmentToBeDeleted.medico?.nome}.`}
-            cancelFunction={() => setOpenModalDeleteAppointment(false)}
-            okFunction={() => tryDeleteAppointment(appointmentToBeDeleted.id)}
-          />
-        </M.DialogPortal>
-      </M.DialogRoot>
-
-      <M.DialogRoot
-        open={openModalLogout}
-        onOpenChange={setOpenModalLogout}
-      >
+      <M.DialogRoot open={openModalLogout} onOpenChange={setOpenModalLogout}>
         <M.DialogPortal>
           <M.DialogOverlay />
           <Modal
